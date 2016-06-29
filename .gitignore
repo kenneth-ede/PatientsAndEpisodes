@@ -200,3 +200,8 @@ PatientsAndEpisodes/packages/jQuery.Validation.1.10.0/jQuery.Validation.1.10.0.n
 PatientsAndEpisodes/packages/knockoutjs.2.2.0/Content/Scripts/knockout-2.2.0.debug.js
 PatientsAndEpisodes/packages/knockoutjs.2.2.0/Content/Scripts/knockout-2.2.0.js
 PatientsAndEpisodes/packages/knockoutjs.2.2.0/knockoutjs.2.2.0.nupkg
+PatientsAndEpisodes/PatientsAndEpisodes.v2.ncrunchsolution
+PatientsAndEpisodes/RestApi/RestApi.v2.ncrunchproject
+PatientsAndEpisodes/packages/Autofac.3.5.2/Autofac.3.5.2.nupkg
+PatientsAndEpisodes/packages/Autofac.3.5.2/lib/net40/Autofac.xml
+PatientsAndEpisodes/packages/Autofac.3.5.2/lib/portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/Autofac.xml
