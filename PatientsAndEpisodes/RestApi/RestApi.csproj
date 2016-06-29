@@ -157,6 +157,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="IoC\AutofacInit.cs" />
     <Compile Include="Models\Episode.cs" />
     <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\PatientContext.cs" />
