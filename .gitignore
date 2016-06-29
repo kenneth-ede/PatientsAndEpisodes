@@ -244,3 +244,9 @@ PatientsAndEpisodes/UnitTests/bin/Debug/System.Web.WebPages.Razor.xml
 PatientsAndEpisodes/UnitTests/bin/Debug/System.Web.WebPages.xml
 PatientsAndEpisodes/UnitTests/bin/Debug/nunit.framework.xml
 PatientsAndEpisodes/UnitTests/obj/Debug/RestApiUnitTests.csproj.FileListAbsolute.txt
+PatientsAndEpisodes/packages/Autofac.Mvc4.3.1.0/Autofac.Mvc4.3.1.0.nupkg
+PatientsAndEpisodes/packages/Autofac.Mvc4.3.1.0/lib/net40/Autofac.Integration.Mvc.xml
+PatientsAndEpisodes/packages/Autofac.Web.4.0.0/Autofac.Web.4.0.0.nupkg
+PatientsAndEpisodes/packages/Autofac.Web.4.0.0/lib/net45/Autofac.Integration.Web.xml
+PatientsAndEpisodes/packages/Autofac.WebApi.3.1.0/Autofac.WebApi.3.1.0.nupkg
+PatientsAndEpisodes/packages/Autofac.WebApi.3.1.0/lib/net40/Autofac.Integration.WebApi.xml
