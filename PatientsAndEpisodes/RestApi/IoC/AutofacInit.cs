@@ -11,59 +11,25 @@ namespace RestApi.IoC
     {
         public IContainer Container { get; private set; }
 
-        public void Configure()
+        public AutofacInit()
         {
             var builder = new ContainerBuilder();
 
-            OnConfigure(builder);
+            // Get your HttpConfiguration.
+            var config = GlobalConfiguration.Configuration;
 
-            if (Container == null)
-            {
-                Container = builder.Build();
-            }
-            else
-            {
-                builder.Update(Container);
-            }
-
-            // This tells the MVC application to use container as its dependency resolver
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(Container));
-
-            // Create the depenedency resolver.
-            var resolver = new AutofacWebApiDependencyResolver(Container);
-
-            // Configure Web API with the dependency resolver.
-            GlobalConfiguration.Configuration.DependencyResolver = resolver;
-        }
-
-        protected virtual void OnConfigure(ContainerBuilder builder)
-        {
-            // register controllers 
-            builder.RegisterControllers(Assembly.GetExecutingAssembly());
+            // Register your Web API controllers.
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            //Resolver.Resolve(builder);
+            // OPTIONAL: Register the Autofac filter provider.
+            builder.RegisterWebApiFilterProvider(config);
 
-            //AspBindings.Resolve(builder);
+            // Set the dependency resolver to be Autofac.
+            var container = builder.Build();
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
-            //// helpers
-            //AspBindings.RegisterHelpers(builder);
-
-            //// register application context and services for umbraco
-            //AspBindings.RegisterUmbracoTypes(builder);
-
-            //AspBindings.RegisterSpatialTypes(builder);
-            //AspBindings.RegisterModelBuilders(builder);
-            //AspBindings.RegisterSearchTypes(builder);
-            //AspBindings.RegisterSettingTypes(builder);
-            //AspBindings.RegisterSimpleMappings(builder);
-            //AspBindings.RegisterComplexSignatures(builder);
-            //AspBindings.RegisterAdvancedSearch(builder);
-            //AspBindings.RegisterAccountControllers(builder);
-            //AspBindings.RegisterSummaryCollectionBuilders(builder);
-            //AspBindings.RegisterModules(builder);
-            //AspBindings.RegisterCacheProvider(builder);
-            //AspBindings.RegisterRecurringEvents(builder);
+            var svc = GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(ApiController));
         }
-    }
+
+     }
 }
