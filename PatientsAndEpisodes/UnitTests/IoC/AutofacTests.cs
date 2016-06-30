@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Web.Http;
+using Autofac;
+using RestApi.IoC;
 
 namespace RestApiUnitTests.IoC
 {
@@ -11,10 +13,11 @@ namespace RestApiUnitTests.IoC
         {
             // arrange
             var ioc = new RestApi.IoC.AutofacInit();
+
             var expected = typeof(RestApi.Controllers.PatientsController);
 
             // act
-            var actual = GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(ApiController));
+            var actual = AutofacInit.Container.Resolve<RestApi.Controllers.PatientsController>();
 
             // assert
             Assert.IsInstanceOf(expected, actual);

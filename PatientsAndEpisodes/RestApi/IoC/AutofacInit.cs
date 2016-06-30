@@ -4,12 +4,13 @@ using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
+using RestApi.Controllers;
 
 namespace RestApi.IoC
 {
     public class AutofacInit
     {
-        public IContainer Container { get; private set; }
+        public static IContainer Container { get; private set; }
 
         public AutofacInit()
         {
@@ -25,11 +26,9 @@ namespace RestApi.IoC
             builder.RegisterWebApiFilterProvider(config);
 
             // Set the dependency resolver to be Autofac.
-            var container = builder.Build();
-            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
-
-            var svc = GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(ApiController));
+            Container = builder.Build();
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(Container);
         }
 
-     }
+    }
 }
