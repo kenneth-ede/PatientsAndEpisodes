@@ -1,33 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
 using RestApi.Models;
+using RestApi.Repository;
 
 namespace RestApi.Controllers
 {
     public class PatientsController : ApiController
     {
+        private readonly IPatientRepository _patientRepository;
+
+        public PatientsController( IPatientRepository patientRepository)
+        {
+            _patientRepository = patientRepository;
+        }
+
         [HttpGet]
         public Patient Get(int patientId)
         {
-            var patientContext = new PatientContext();
+            var patient = _patientRepository.GetPatient(patientId);
 
-            var patientsAndEpisodes =
-                from p in patientContext.Patients
-                join e in patientContext.Episodes on p.PatientId equals e.PatientId
-                where p.PatientId == patientId
-                select new {p, e};
-
-            if (patientsAndEpisodes.Any())
-            {
-                var first = patientsAndEpisodes.First().p;
-                first.Episodes = patientsAndEpisodes.Select(x => x.e).ToArray();
-                return first;
-            }
+            if(patient != null)
+                return patient;
 
             throw new HttpResponseException(HttpStatusCode.NotFound);
         }
+
     }
+    
 }
