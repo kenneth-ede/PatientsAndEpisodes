@@ -1,10 +1,7 @@
-﻿using System.Reflection;
-using Autofac;
+﻿using Autofac;
 using NUnit.Framework;
-using RestApi.Controllers;
 using RestApi.IoC;
 using RestApi.Models;
-using RestApi.Repository;
 
 namespace RestApiUnitTests.IoC
 {
@@ -12,46 +9,37 @@ namespace RestApiUnitTests.IoC
     public class AutofacSetupTests
     {
         [Test]
-        public void ResolveController_UsingSqlData_ExpectPatientsControllerAndSqlRepository()
+        public void ResolveController_UsingInMemoryContext_ExpectPatientsControllerWithInMemoryContext()
         {
             // arrange
             var ioc = new AutofacSetup();
 
-            var expectedController = typeof (PatientsController);
-            var expectedRepository = typeof(PatientRepository);
-            var expectedContext = typeof(PatientContext);
-
-            // act
-            var container = ioc.Init();
-
-            var actualController = container.Resolve<PatientsController>();
-            var actualRepository = container.Resolve<IPatientRepository>();
-            var actualContext = container.Resolve<IPatientContext>();
-
-            // assert
-            Assert.IsInstanceOf(expectedController, actualController);
-            Assert.IsInstanceOf(expectedRepository, actualRepository);
-            Assert.IsInstanceOf(expectedContext, actualContext);
-        }
-
-        [Test]
-        public void ResolveController_UsingImMemoryData_ExpectPatientsControllerAndInMemoryRepository()
-        {
-            // arrange
-            var ioc = new AutofacSetup();
-
-            var expectedController = typeof(PatientsController);
-            var expectedRepository = typeof(InMemoryRepository);
+            var expectedContext = typeof (InMemoryContext);
 
             // act
             var container = ioc.Init(true);
 
-            var actualController = container.Resolve<PatientsController>();
-            var actualRepository = container.Resolve<IPatientRepository>();
+            var actualContext = container.Resolve<IPatientContext>();
 
             // assert
-            Assert.IsInstanceOf(expectedController, actualController);
-            Assert.IsInstanceOf(expectedRepository, actualRepository);
+            Assert.IsInstanceOf(expectedContext, actualContext);
+        }
+
+        [Test]
+        public void ResolveController_UsingSqlData_ExpectPatientsControllerWithPatientsContext()
+        {
+            // arrange
+            var ioc = new AutofacSetup();
+
+            var expectedContext = typeof (PatientContext);
+
+            // act
+            var container = ioc.Init();
+
+            var actualContext = container.Resolve<IPatientContext>();
+
+            // assert
+            Assert.IsInstanceOf(expectedContext, actualContext);
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
 using RestApi.Models;
-using RestApi.Repository;
 
 namespace RestApi.IoC
 {
@@ -23,15 +22,13 @@ namespace RestApi.IoC
             builder.RegisterWebApiFilterProvider(config);
 
             // register types
-            builder.RegisterType<PatientContext>().AsImplementedInterfaces();
-
             if (useInMemoryRepository)
             {
-                builder.RegisterType<InMemoryRepository>().AsImplementedInterfaces();
+                builder.RegisterType<InMemoryContext>().AsImplementedInterfaces();
             }
             else
             {
-                builder.RegisterType<PatientRepository>().AsImplementedInterfaces();
+                builder.RegisterType<PatientContext>().AsImplementedInterfaces();
             }
 
             // Set the dependency resolver to be Autofac.

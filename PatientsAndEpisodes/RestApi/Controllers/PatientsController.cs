@@ -1,33 +1,36 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Web.Http;
 using RestApi.Models;
-using RestApi.Repository;
 
 namespace RestApi.Controllers
 {
     public class PatientsController : ApiController
     {
-        private readonly IPatientRepository _patientRepository;
+        private readonly IPatientContext _dbContext;
 
-        public PatientsController( IPatientRepository patientRepository)
+        public PatientsController(IPatientContext dbContext)
         {
-            _patientRepository = patientRepository;
+            _dbContext = dbContext;
         }
 
         [HttpGet]
         public Patient Get(int patientId)
         {
-            var patient = _patientRepository.GetPatient(patientId);
+            var patientsAndEpisodes =
+                from p in _dbContext.Patients
+                join e in _dbContext.Episodes on p.PatientId equals e.PatientId
+                where p.PatientId == patientId
+                select new {p, e};
 
-            if(patient != null)
-                return patient;
+            if (patientsAndEpisodes.Any())
+            {
+                var first = patientsAndEpisodes.First().p;
+                first.Episodes = patientsAndEpisodes.Select(x => x.e).ToArray();
+                return first;
+            }
 
             throw new HttpResponseException(HttpStatusCode.NotFound);
         }
-
     }
-    
 }
